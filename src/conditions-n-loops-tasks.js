@@ -399,8 +399,105 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  let ring = 0;
+  const rot = new Array(matrix.length);
+  for (let i = 0; i < rot.length; i += 1) {
+    rot[i] = new Array(matrix.length);
+  }
+
+  function topRow() {
+    const row = new Array(matrix.length - ring - 1);
+    let k = 0;
+    for (let i = ring; i < matrix.length - ring - 1; i += 1) {
+      row[k] = matrix[ring][i];
+      k += 1;
+    }
+    return row;
+  }
+
+  function asignTopRow(arr) {
+    let k = 0;
+    for (let i = ring; i < matrix.length - ring - 1; i += 1) {
+      rot[ring][i] = arr[k];
+      k += 1;
+    }
+  }
+
+  function bottomRow() {
+    const row = new Array(matrix.length - ring - 1);
+    let k = 0;
+    for (let i = matrix.length - ring - 1; i > ring; i -= 1) {
+      row[k] = matrix[matrix.length - ring - 1][i];
+      k += 1;
+    }
+    return row;
+  }
+
+  function asignBottomRow(arr) {
+    let k = 0;
+    for (let i = matrix.length - ring - 1; i > ring; i -= 1) {
+      rot[matrix.length - ring - 1][i] = arr[k];
+      k += 1;
+    }
+  }
+
+  function leftCol() {
+    const col = new Array(matrix.length - ring - 1);
+    let k = 0;
+    for (let i = matrix.length - ring - 1; i > ring; i -= 1) {
+      col[k] = matrix[i][ring];
+      k += 1;
+    }
+    return col;
+  }
+
+  function asignLeftCol(arr) {
+    let k = 0;
+    for (let i = matrix.length - ring - 1; i > ring; i -= 1) {
+      rot[i][ring] = arr[k];
+      k += 1;
+    }
+  }
+
+  function rightCol() {
+    const col = new Array(matrix.length - ring - 1);
+    let k = 0;
+    for (let i = ring; i < matrix.length - ring - 1; i += 1) {
+      col[k] = matrix[i][matrix.length - ring - 1];
+      k += 1;
+    }
+    return col;
+  }
+
+  function asignRightCol(arr) {
+    let k = 0;
+    for (let i = ring; i < matrix.length - ring - 1; i += 1) {
+      rot[i][matrix.length - ring - 1] = arr[k];
+      k += 1;
+    }
+  }
+
+  if (matrix.length / 2 !== Math.floor(matrix.length / 2)) {
+    const mid = Math.floor(matrix.length / 2);
+    rot[mid][mid] = matrix[mid][mid];
+  }
+
+  while (ring < Math.floor(matrix.length / 2)) {
+    const tr = topRow();
+    const rc = rightCol();
+    const br = bottomRow();
+    const lc = leftCol();
+    asignTopRow(lc);
+    asignRightCol(tr);
+    asignBottomRow(rc);
+    asignLeftCol(br);
+    ring += 1;
+  }
+  console.debug(matrix);
+  console.debug(rot);
+  matrix = rot;
+  return rot;
 }
 
 /**
