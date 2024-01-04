@@ -610,7 +610,6 @@ function shuffleChar(str, iterations) {
  * @returns {number} The nearest larger number, or original number if none exists.
  */
 function getNearestBigger(number) {
-  console.debug(number);
   function popFitting(arr, digit) {
     const a = arr;
     let fittingIndex = -1;
