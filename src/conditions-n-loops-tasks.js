@@ -563,10 +563,7 @@ function shuffleChar(str, iterations) {
   let iter = iterations;
   let out = str;
   const lenght = out.length;
-  while (true) {
-    if (iter < 1) {
-      return out;
-    }
+  while (iter >= 1) {
     let left = '';
     let right = '';
     for (let i = 1; i < lenght - 1; i += 2) {
@@ -582,6 +579,7 @@ function shuffleChar(str, iterations) {
       return cache[iterations % cache.length];
     }
   }
+  return out;
 }
 
 /**
