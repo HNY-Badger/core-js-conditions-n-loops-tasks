@@ -401,10 +401,7 @@ function getSpiralMatrix(size) {
  */
 function rotateMatrix(matrix) {
   let ring = 0;
-  const rot = new Array(matrix.length);
-  for (let i = 0; i < rot.length; i += 1) {
-    rot[i] = new Array(matrix.length);
-  }
+  const rot = matrix;
 
   function topRow() {
     const row = new Array(matrix.length - ring - 1);
@@ -494,10 +491,6 @@ function rotateMatrix(matrix) {
     asignLeftCol(br);
     ring += 1;
   }
-  console.debug(matrix);
-  console.debug(rot);
-  // matrix = rot;
-  return rot;
 }
 
 /**
@@ -547,6 +540,18 @@ function sortByAsc(arr) {
  */
 function shuffleChar(/* str, iterations */) {
   throw new Error('Not implemented');
+  // let left = '';
+  // let right = '';
+  // for (let i = 0; i < str.length; i += 1) {
+  //   if (i % 2 === 0) {
+  //     left += str[i];
+  //   } else {
+  //     right += str[i];
+  //   }
+  // }
+  // return iterations > 1
+  //   ? shuffleChar(left + right, iterations - 1)
+  //   : left + right;
 }
 
 /**
