@@ -591,18 +591,55 @@ function shuffleChar(str, iterations) {
  *
  * @example:
  * 12345    => 12354
+ *    55
  * 123450   => 123504
+ *    660
  * 12344    => 12434
+ *   554
  * 123440   => 124034
+ *   6650
  * 1203450  => 1203504
+ *     660
  * 90822    => 92028
+ *   3 10 3 2
  * 321321   => 322113
- *
+ *   4531
+ * 7074022710479742 => 7074022710492477 // 7074022710472479
+ *            11 12 9 5 2
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  console.debug(number);
+  function popFitting(arr, digit) {
+    const a = arr;
+    let fittingIndex = -1;
+    for (let i = 0; i < a.length; i += 1) {
+      if (a[i] > digit && (fittingIndex === -1 || a[i] <= a[fittingIndex])) {
+        fittingIndex = i;
+      }
+    }
+    const out = a[fittingIndex];
+    a.splice(fittingIndex, 1);
+    return out;
+  }
+  const nums = [];
+  let i = 0;
+  let num = number;
+  while (num > 1) {
+    const digit = num % 10;
+    num = Math.floor(num / 10);
+    if (!nums || nums[nums.length - 1] + nums.length - 1 >= digit + i) {
+      num *= 10;
+      num += popFitting(nums, digit);
+      nums.push(digit);
+      num += nums.sort((a, b) => a - b).join('');
+      return +num;
+    }
+    nums.push(digit);
+    i += 1;
+  }
+  return number;
 }
 
 module.exports = {
